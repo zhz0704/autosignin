@@ -88,20 +88,7 @@ def main():
     sleep(1)
 
     # TODO 新增今日班表
-    tab_enter(3, 0.05)
-    edge.restore()
-    edge.moveTo(0, 0)
-    edge.resizeTo(650, 650)
-    sleep(0.5)
 
-    # set zoom to 100%
-    kb.press('ctrl')
-    send('-', 7)
-    send('=', 7)
-    kb.release('ctrl')
-
-    # 班表 end
-    return
     shift_tab_enter(2, 0.05)
     sleep(0.5)
     tab_enter(2, 0.05)
