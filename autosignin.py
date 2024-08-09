@@ -19,7 +19,7 @@ HWND_TOP = 0
 # Window Message constants:
 WM_CLOSE = 0x0010
 
-delay_modifier = 0
+speed = 1
 
 
 def send(key: str, times=1, delay=0):
@@ -32,7 +32,7 @@ def write(s: str):
         send(c, 1, 0.05)
 
 def sleep(t):
-    time.sleep(t * delay_modifier)
+    time.sleep(t / speed)
 
 def get_edge():
     t = time.time()
@@ -157,7 +157,7 @@ def main():
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Auto Sign in')
-    parser.add_argument('-d', '--delay-modifier', type=float, default=1, help='Multiply the delay between key presses by this value.')
+    parser.add_argument('-s', '--speed', type=float, default=1, help='Multiply the delay between key presses by this value.')
     args = parser.parse_args()
-    delay_modifier = args.delay_modifier
+    speed = args.speed
     main()
