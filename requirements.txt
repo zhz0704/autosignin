@@ -2,3 +2,4 @@ keyboard==0.13.5
 mouse==0.7.1
 PyGetWindow==0.0.9
 pyperclip==1.9.0
+Requests==2.32.3
