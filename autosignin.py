@@ -132,7 +132,7 @@ def main():
         }))
     })
     .catch(error => console.error('Error:', error)); // Handle any errors
-    ''' % (token, '2024-08-13')
+    ''' % (token, formatted_date)
 
     # open console
     send('ctrl+shift+j', 1, 0.5)
@@ -157,7 +157,7 @@ def main():
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Auto Sign in')
-    parser.add_argument('-s', '--speed', type=float, default=1, help='Multiply the delay between key presses by this value.')
+    parser.add_argument('-s', '--speed', type=float, default=1, help='The speed of the script.')
     args = parser.parse_args()
     speed = args.speed
     main()
