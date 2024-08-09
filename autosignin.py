@@ -25,7 +25,7 @@ delay_modifier = 0
 def send(key: str, times=1, delay=0):
     for _ in range(times):
         kb.send(key)
-        sleep(delay * delay_modifier)
+        sleep(delay)
 
 def write(s: str):
     for c in s:
