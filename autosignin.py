@@ -5,7 +5,7 @@ import ctypes
 import pygetwindow as gw
 import mouse
 import argparse
-
+from datetime import datetime
 
 SW_MINIMIZE = 6
 SW_MAXIMIZE = 3
@@ -59,7 +59,7 @@ def shift_tab_enter(count: int, delay=0):
 def main():
     original = pyperclip.paste()
     # open edge
-    send('win', 1, 1)
+    send('win', 1, 0.5)
     pyperclip.copy('Microsoft Edge')
     send('ctrl+v', 1, 0.5)
     send('enter')
@@ -80,31 +80,76 @@ def main():
     pyperclip.copy('https://duty21.microsoftintern.com/')
     send('ctrl+v', 1, 0.5)
     send('enter')
-    pyperclip.copy(original)
     sleep(1)
 
     # 登入
-    tab_enter(2, 0.05)
-    sleep(1)
-
-    # TODO 新增今日班表
-    tab_enter(3, 0.05)
-    edge.restore()
-    edge.moveTo(0, 0)
-    edge.resizeTo(650, 650)
+    tab_enter(2, 0.01)
     sleep(0.5)
 
-    # set zoom to 100%
-    kb.press('ctrl')
-    send('-', 7)
-    send('=', 7)
-    kb.release('ctrl')
+    # TODO 新增今日班表
 
-    # 班表 end
-    return
+    # get html source
+    send('ctrl+u', 1, 0.5)
+    send('ctrl+a', 1, 0.1)
+    send('ctrl+c', 1, 0.1)
+    send('ctrl+w', 1, 0.05)
+
+    # parse token
+    html = pyperclip.paste()
+    print(html)
+    for line in html.split('\n'):
+        if '_token' in line:
+            token = line.split('value="')[1].split('"')[0]
+    print(token)
+
+    current_date = datetime.now()
+    formatted_date = current_date.strftime('%Y-%m-%d')
+
+    print(formatted_date)
+
+    # js code
+    js = '''
+    fetch('https://duty21.microsoftintern.com/user/365/duty', {
+        method: 'POST', // Specify the method
+        headers: {
+        'Content-Type': 'application/x-www-form-urlencoded' // Specify the content type
+        },
+        body: new URLSearchParams({
+        _token: '%s',
+        date: '%s',
+        type: 'A'
+        }) // Format the payload as URL-encoded
+    })
+    .then(response => {
+        // Log the status and headers
+        console.log('Status:', response.status);
+        console.log('Headers:', response.headers);
+
+        console.log('data:', response.text().then(text => {
+            // console.log(text);
+        }))
+    })
+    .catch(error => console.error('Error:', error)); // Handle any errors
+    ''' % (token, formatted_date)
+
+    # open console
+    send('ctrl+shift+j', 1, 0.5)
+    kb.write('allow pasting')
+    time.sleep(0.1)
+    send('enter', 1, 0.1)
+    pyperclip.copy(js)
+    send('ctrl+v', 1, 0.1)
+    send('enter', 1, 0.5)
+    send('ctrl+shift+j', 1, 0.1)
+    tab_enter(1, 0.05)
+    sleep(0.5)
+
+    # 簽到
     shift_tab_enter(2, 0.05)
     sleep(0.5)
     tab_enter(2, 0.05)
+
+    pyperclip.copy(original)
 
 
     
