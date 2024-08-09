@@ -86,7 +86,9 @@ def main():
     tab_enter(2, 0.01)
     sleep(0.5)
 
-    # TODO 新增今日班表
+    # 去新增班表頁面
+    tab_enter(3, 0.01)
+    sleep(0.5)
 
     # get html source
     send('ctrl+u', 1, 0.5)
@@ -130,20 +132,19 @@ def main():
         }))
     })
     .catch(error => console.error('Error:', error)); // Handle any errors
-    ''' % (token, formatted_date)
+    ''' % (token, '2024-08-13')
 
     # open console
     send('ctrl+shift+j', 1, 0.5)
-    kb.write('allow pasting')
-    time.sleep(0.1)
-    send('enter', 1, 0.1)
+    # kb.write('allow pasting')
+    # time.sleep(0.1)
+    # send('enter', 1, 0.1)
     pyperclip.copy(js)
     send('ctrl+v', 1, 0.1)
     send('enter', 1, 0.5)
     send('ctrl+shift+j', 1, 0.1)
     tab_enter(1, 0.05)
     sleep(0.5)
-
     # 簽到
     shift_tab_enter(2, 0.05)
     sleep(0.5)
