@@ -3,7 +3,6 @@ import keyboard as kb
 import pyperclip
 import ctypes
 import pygetwindow as gw
-import mouse
 import argparse
 from datetime import datetime
 
@@ -20,6 +19,7 @@ HWND_TOP = 0
 WM_CLOSE = 0x0010
 
 speed = 1
+userid = None
 
 
 def send(key: str, times=1, delay=0):
@@ -36,7 +36,7 @@ def sleep(t):
 
 def get_edge():
     t = time.time()
-    while time.time() - t < 10:
+    while time.time() - t < 5:
         all_windows = gw.getAllWindows()
         for w in all_windows:
             title = str(w.title)
@@ -44,6 +44,11 @@ def get_edge():
             words = ['New', 'tab', 'Microsoft', 'Edge']
             if all([w in title for w in words]):
                 return w
+            
+            words = ['新索引標籤', 'Microsoft', 'Edge']
+            if all([w in title for w in words]):
+                return w
+            
     return None
     
 def tab_enter(count: int, delay=0):
@@ -98,7 +103,7 @@ def main():
 
     # parse token
     html = pyperclip.paste()
-    print(html)
+    # print(html)
     for line in html.split('\n'):
         if '_token' in line:
             token = line.split('value="')[1].split('"')[0]
@@ -111,7 +116,7 @@ def main():
 
     # js code
     js = '''
-    fetch('https://duty21.microsoftintern.com/user/365/duty', {
+    fetch('https://duty21.microsoftintern.com/user/%s/duty', {
         method: 'POST', // Specify the method
         headers: {
         'Content-Type': 'application/x-www-form-urlencoded' // Specify the content type
@@ -132,7 +137,7 @@ def main():
         }))
     })
     .catch(error => console.error('Error:', error)); // Handle any errors
-    ''' % (token, formatted_date)
+    ''' % (userid, token, formatted_date)
 
     # open console
     send('ctrl+shift+j', 1, 0.5)
@@ -157,8 +162,10 @@ def main():
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Auto Sign in')
+    parser.add_argument('-u', '--user-id', required=True, type=int, help='The value after /user/ in the url.')
     parser.add_argument('-s', '--speed', type=float, default=1, help='The speed of the script.')
     args = parser.parse_args()
     speed = args.speed
     speed /= 2
+    userid = args.user_id
     main()
