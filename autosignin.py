@@ -160,4 +160,5 @@ if __name__ == '__main__':
     parser.add_argument('-s', '--speed', type=float, default=1, help='The speed of the script.')
     args = parser.parse_args()
     speed = args.speed
+    speed /= 2
     main()
