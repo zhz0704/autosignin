@@ -19,7 +19,6 @@ HWND_TOP = 0
 WM_CLOSE = 0x0010
 
 speed = 1
-userid = None
 
 
 def send(key: str, times=1, delay=0):
@@ -107,7 +106,10 @@ def main():
     for line in html.split('\n'):
         if '_token' in line:
             token = line.split('value="')[1].split('"')[0]
-    print(token)
+        elif '/user/' in line:
+            userid = line.split('/user/')[1].split('/')[0]
+    print('userid:', userid)
+    print('token:', token)
 
     current_date = datetime.now()
     formatted_date = current_date.strftime('%Y-%m-%d')
@@ -162,10 +164,8 @@ def main():
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Auto Sign in')
-    parser.add_argument('-u', '--user-id', required=True, type=int, help='The value after /user/ in the url.')
     parser.add_argument('-s', '--speed', type=float, default=1, help='The speed of the script.')
     args = parser.parse_args()
     speed = args.speed
-    speed /= 2
-    userid = args.user_id
+    speed *= 0.5
     main()
