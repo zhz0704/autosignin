@@ -142,7 +142,9 @@ def main():
     ''' % (userid, token, formatted_date)
 
     # open console
-    send('ctrl+shift+j', 1, 0.5)
+    send('ctrl+shift+j', 1, 1)
+    # not sure if needed?
+    send('tab', 1, 0.1)
     # kb.write('allow pasting')
     # time.sleep(0.1)
     # send('enter', 1, 0.1)
@@ -159,8 +161,6 @@ def main():
 
     pyperclip.copy(original)
 
-
-    
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Auto Sign in')
