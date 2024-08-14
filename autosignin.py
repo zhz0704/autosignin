@@ -88,7 +88,7 @@ def main():
 
     # 登入
     tab_enter(2, 0.01)
-    sleep(0.5)
+    sleep(1)
 
     # 去新增班表頁面
     tab_enter(3, 0.01)
