@@ -144,10 +144,12 @@ def main():
     # open console
     send('ctrl+shift+j', 1, 1)
     # not sure if needed?
-    send('tab', 1, 0.1)
+    # send('tab', 1, 0.1)
     # kb.write('allow pasting')
     # time.sleep(0.1)
     # send('enter', 1, 0.1)
+    pyperclip.copy('')
+    send('ctrl+v', 1, 0.1)
     pyperclip.copy(js)
     send('ctrl+v', 1, 0.1)
     send('enter', 1, 0.5)
