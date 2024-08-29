@@ -96,8 +96,8 @@ def main():
 
     # get html source
     send('ctrl+u', 1, 0.5)
-    send('ctrl+a', 1, 0.1)
-    send('ctrl+c', 1, 0.1)
+    send('ctrl+a', 1, 0.2)
+    send('ctrl+c', 1, 0.2)
     send('ctrl+w', 1, 0.05)
 
     # parse token
